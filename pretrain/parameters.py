@@ -57,16 +57,11 @@ class Parameters(object):
         self.num_layers = 1
 
         # -------------------init dataset-------------------
-        if self.dataset == 'THU':
+        if self.dataset == 'WIFI':
             self.loc_size = 114
             self.uid_size = 10966
             self.use_user = False
-            self.save_emb_name = 'THU'
-        if self.dataset == 'T_original':
-            self.loc_size = 24321
-            self.uid_size = 2293
-            self.use_user = True
-            self.save_emb_name = 'T_original'
+            self.save_emb_name = 'WIFI'
         if self.dataset == 'T':
             self.loc_size = 300
             self.uid_size = 1729

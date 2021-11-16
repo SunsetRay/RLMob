@@ -31,7 +31,7 @@ class Parameter:
     reward_scale = 10.0
 
     # data
-    dataset = 'F'  # T, F, THU (Foursquare-TKY, Foursquare-NYK, Univ-WIFI respectively)
+    dataset = 'F'  # T, F, WIFI (Foursquare-TKY, Foursquare-NYK, Univ-WIFI respectively)
     use_user = True
     reward_use_bsl = True
 
@@ -46,7 +46,7 @@ class Parameter:
         uid_emb_name = 'T_07-30_uid'
         bsl_model_name = 'baseline_mlp2.m'
         prt_model_name = 'baseline_mlp2.m'
-    if dataset == 'THU':
+    if dataset == 'WIFI':
         loc_size = 114
         uid_size = 9887
         loc_emb_name = None

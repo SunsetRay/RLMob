@@ -16,13 +16,9 @@ from parameters import Parameters
 
 
 def run(parameters):
-    # with open('data/THU/pretrain/pretrain_THU_train.pk', 'rb') as f:
-    # with open('data/T/pretrain/Tpretrain_train.pk', 'rb') as f:
     with open('data/'+parameters.dataset+'/bsl/train.pk', 'rb') as f:
         data_train = pickle.load(f)
 
-    # with open('data/THU/pretrain/pretrain_THU_test.pk', 'rb') as f:
-    # with open('data/T/pretrain/Tpretrain_test.pk', 'rb') as f:
     with open('data/'+parameters.dataset+'/bsl/test.pk', 'rb') as f:
         data_test = pickle.load(f)
 

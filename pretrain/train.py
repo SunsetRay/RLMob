@@ -180,10 +180,8 @@ class Test(object):
         return self.acc / (len(data)*self.parameters.target_num), avg_loss
 
     def calculate_accuracy(self, target, scores):
-        """target and scores are torch cuda Variable"""
-        target = target.data.cpu().numpy()  # target=[pid,pid,pid,pid]
-        _, idxx = scores.data.topk(10)  # val, idxx:[10]
-        # Returns the k largest elements of the given input tensor along a given (the last) dimension.
+        target = target.data.cpu().numpy()
+        _, idxx = scores.data.topk(10)
         predx = idxx.cpu().numpy()
 
         for i, _ in enumerate(target):
