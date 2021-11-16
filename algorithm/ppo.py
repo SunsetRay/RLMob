@@ -42,15 +42,7 @@ class PPO(nn.Module):
         ) if k in pi_dict.keys()}
         self.pi.load_state_dict(pi_new_dict)
 
-        # fc1_dict = {'weight': pretrained_model_dict['fc1.weight'], 
-        #             'bias': pretrained_model_dict['fc1.bias']}
-        # self.fc1.load_state_dict(fc1_dict)
-
         self.optimizer = optim.Adam(self.parameters(), lr=lr, weight_decay=0)
-        # self.optimizer = optim.Adam([
-        #                             {'params': self.parameters(), 'lr': lr},
-        #                             {'params': self.env.state_encode_net.parameters(), 'lr': lr}
-        #                             ], lr=lr, weight_decay=0)
     
     def v(self, x):
         # x = F.relu(self.fc1(x))
@@ -74,19 +66,14 @@ class PPO(nn.Module):
         for transition in self.data:
             s, a, r, s_prime, prob_a, done = transition
             
-            # s_lst = torch.cat((s_lst, s.unsqueeze(0)), 0).detach()  # TODO: Pretrain or train together
             s_lst.append(s)
             a_lst.append([a])
             r_lst.append([r])
-            # s_prime_lst = torch.cat((s_prime_lst, s_prime.unsqueeze(0)), 0).detach()  # TODO: Pretrain or train together
             s_prime_lst.append(s_prime)
             prob_a_lst.append([prob_a])
             done_mask = 0 if done else 1
             done_lst.append([done_mask])
             
-        # s,a,r,s_prime,done_mask,prob_a = s_lst, torch.LongTensor(a_lst).to(d), \
-        #                                   torch.FloatTensor(r_lst).to(d), s_prime_lst, \
-        #                                   torch.FloatTensor(done_lst).to(d), torch.FloatTensor(prob_a_lst).to(d)
         s,a,r,s_prime,done_mask,prob_a = torch.FloatTensor(s_lst).to(d), torch.LongTensor(a_lst).to(d), \
                                           torch.FloatTensor(r_lst).to(d), torch.FloatTensor(s_prime_lst).to(d), \
                                           torch.FloatTensor(done_lst).to(d), torch.FloatTensor(prob_a_lst).to(d)
