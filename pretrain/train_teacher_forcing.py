@@ -35,7 +35,6 @@ class Train(object):
             uid_all = []
             tid_all = []
             seq_len = []
-            # category_all = []
             while (j < self.parameters.batch_size) and (self.parameters.batch_size*i+j < len(data)):
                 record = data[self.parameters.batch_size*i+j]
                 j += 1
@@ -57,7 +56,6 @@ class Train(object):
             target = torch.LongTensor(target_all)
             target_time_v = torch.LongTensor(target_time_all)
             uid_all_v = torch.LongTensor(uid_all)
-            # category_all = torch.LongTensor(category_all)
 
             if self.parameters.use_cuda:
                 pid_v = pid_v.cuda()
@@ -119,7 +117,6 @@ class Test(object):
                 uid = []
                 tid = []
                 seq_len = []
-                # category_all = []
                 while (j < self.parameters.batch_size) and (self.parameters.batch_size * i + j < len(data)):
                     record = data[self.parameters.batch_size*i+j]
                     pid.append(copy.deepcopy(record['present_pid'][0]))
@@ -128,11 +125,9 @@ class Test(object):
                     if not self.parameters.is_baseline:
                         target.append(record['pid_label'][0])
                         target_time.append(record['tid_label'][0])
-                        # category_all.append(record['districts'][0])
                     else:
                         target.append(record['pid_label'][0][k])
                         target_time.append(record['tid_label'][0][k])
-                        # category_all.append(record['present_districts'][0])
                     uid.append(record['uids'][0])
                     seq_len.append(self.parameters.window_size+k)
                     
@@ -143,7 +138,6 @@ class Test(object):
                 uid_v = torch.LongTensor(uid)
                 target = torch.LongTensor(target)
                 target_time_v = torch.LongTensor(target_time)
-                # category_all = torch.LongTensor(category_all)
 
                 if self.parameters.use_cuda:
                     pid_v = pid_v.cuda()
@@ -190,7 +184,6 @@ class Test(object):
         """target and scores are torch cuda Variable"""
         target = target.data.cpu().numpy()  # target=[pid,pid,pid,pid]
         _, idxx = scores.data.topk(10)  # val, idxx:[10]
-        # Returns the k largest elements of the given input tensor along a given (the last) dimension.
         predx = idxx.cpu().numpy()
         pred_list = []
 
