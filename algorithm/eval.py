@@ -91,7 +91,7 @@ def eval_on_test_dataset(episode, agent, writer, max_steps=5):
         else:
             equal_eval += 1
 
-            # acc@1, ccor, l2 appending
+            # acc@1, cocin, l2 appending
         acc_num_bsl += ours_objectives[2]
         acc_num_ours += ours_objectives[3]
         ccor_num_bsl += ours_objectives[0]
@@ -141,21 +141,6 @@ def eval_on_test_dataset(episode, agent, writer, max_steps=5):
         l2_sum_bsl, l2_sum_ours, f1_bsl, f1_ours))
     print("prec_bsl: {:.4f}, prec_ours: {:.4f}, rec_bsl: {:.4f}, rec_ours: {:.4f}".format(
         prec_bsl, prec_ours, rec_bsl, rec_ours))
-
-    # tag_scalar_dict = {
-    #     'Eval-Acc1-Baseline': acc_num_bsl,
-    #     'Eval-Acc1-Ours': acc_num_ours,
-    #     'Eval-CCor-Baseline': ccor_num_bsl,
-    #     'Eval-CCor-Ours': ccor_num_ours,
-    #     'Eval-L2-Baseline': l2_sum_bsl,
-    #     'Eval-L2-Ours': l2_sum_ours,
-    #     'Eval-F1-Baseline': f1_bsl,
-    #     'Eval-F1-Ours': f1_ours,
-    #     'Eval-Precision-Baseline': prec_bsl,
-    #     'Eval-Precision-Ours': prec_ours,
-    #     'Eval-Recall-Baseline': rec_bsl,
-    #     'Eval-Recall-Ours': rec_ours
-    # }
 
     writer.add_scalar(
         tag='Eval-Acc1-Baseline', scalar_value=acc_num_bsl, global_step=episode)
