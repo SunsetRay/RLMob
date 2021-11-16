@@ -57,7 +57,6 @@ class SimpleRNN(nn.Module):
         self.rnn_type = parameters.rnn_type
         self.num_layers = parameters.num_layers
 
-        # hidden_size=[batch_size, 2*window_size, loc_size]
         input_size = self.loc_emb_size * 2 if self.use_time else self.loc_emb_size
         if self.rnn_type == 'GRU':
             self.rnn = nn.GRU(input_size, self.hidden_size, num_layers=self.num_layers, batch_first=True)
@@ -79,26 +78,18 @@ class SimpleRNN(nn.Module):
         if self.use_user:
             uid_emb = self.emb_uid(u_id)
         if self.use_time:
-            # time = torch.transpose(time, 1, 0)
             time_emb = self.emb_time(time)
         if self.use_target_time:
             target_time_emb = self.emb_time(target_time)
-
-        # category = category.view(-1, 1)
-        # category_onehot = torch.zeros(self.batch_size * self.window_size, 7).scatter_(1, category, 1)  # label to one-hot vector
-        # category_onehot = category_onehot.view(self.batch_size, self.window_size, -1)
 
         h1 = Variable(torch.zeros(self.num_layers, loc.size(0), self.hidden_size))
         c1 = Variable(torch.zeros(self.num_layers, loc.size(0), self.hidden_size))
         if self.use_cuda:
             h1 = h1.cuda()
             c1 = c1.cuda()
-            # category_onehot = category_onehot.cuda()
 
         x = self.emb_loc(loc)  # [window_size, batch_size, emb_size]
 
-        # category_onehot = torch.transpose(category_onehot, 1, 0)
-        # x = torch.cat((x, category_onehot), 2)
         if self.use_time:
             x = torch.cat((x, time_emb), 2)
 
@@ -129,7 +120,6 @@ class SimpleRNN(nn.Module):
         out = torch.cat((out, uid_emb), 1) if self.use_user else out
         if self.use_dropout:
             out = self.dropout(out)
-        # y = self.fc(out)
         y = self.fc2(F.relu(self.fc1(out)))
         score = F.log_softmax(y, dim=1)
         return score
