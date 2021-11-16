@@ -68,13 +68,13 @@ class Parameters(object):
             self.use_user = True
             self.save_emb_name = 'T_original'
         if self.dataset == 'T':
-            self.loc_size = 300  # 10646
-            self.uid_size = 1729  # 2274
+            self.loc_size = 300
+            self.uid_size = 1729
             self.use_user = True
             self.save_emb_name = 'T'
         if self.dataset == 'F':
-            self.loc_size = 500  # 2895  # 6937
-            self.uid_size = 532  # 994  # 1061
+            self.loc_size = 500
+            self.uid_size = 532
             self.use_user = True
             self.save_emb_name = 'F'
         if self.model != 'RNN':
