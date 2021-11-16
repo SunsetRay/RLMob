@@ -29,7 +29,6 @@ class VPG_Agent(nn.Module):
 
         obs_dim = self.env.observation_space.shape[0]
         n_acts = self.env.action_space.n
-        # self.pi = mlp(sizes=[obs_dim]+hidden_sizes+[n_acts]).to(d)
         self.pi = MLP2_State(obs_dim, n_acts).to(d)
         pretrained_model_dict = torch.load('data/'+Parameter.dataset+'/cp/'+Parameter.prt_model_name)
         pi_dict = self.pi.state_dict()
@@ -38,10 +37,6 @@ class VPG_Agent(nn.Module):
         self.pi.load_state_dict(pi_new_dict)
 
         # make optimizer
-        # self.optimizer = Adam([
-        #                 {'params': self.pi.parameters(), 'lr': lr},
-        #                 {'params': self.env.state_encode_net.parameters(), 'lr': lr}
-        #                 ], lr=lr, weight_decay=0)
         self.optimizer = Adam(self.pi.parameters(), lr=lr, weight_decay=0)
 
 
@@ -98,7 +93,6 @@ def train(env_name='CartPole-v0', hidden_sizes=[32], lr=1e-2,
         while True:
             # save obs
             batch_obs.append(obs.copy())
-            # batch_obs = torch.cat((batch_obs, obs.unsqueeze(0)), 0).detach()
 
             # act in the environment
             act = get_action(torch.as_tensor(obs, dtype=torch.float32).to(d))
@@ -113,7 +107,6 @@ def train(env_name='CartPole-v0', hidden_sizes=[32], lr=1e-2,
                 ep_ret, ep_len = sum(ep_rews), len(ep_rews)
                 batch_rets.append(ep_ret)
                 batch_lens.append(ep_len)
-                # print('ep{} return: {}'.format(len(batch_rets), ep_ret))
 
                 # the weight for each logprob(a_t|s_t) is reward-to-go from t
                 batch_weights += list(reward_to_go(ep_rews))
