@@ -41,9 +41,9 @@ class Parameter:
     if dataset == 'T':
         loc_size = 300
         uid_size = 1729
-        loc_emb_name = 'T_07-30_loc'
-        tim_emb_name = 'T_07-30_tim'
-        uid_emb_name = 'T_07-30_uid'
+        loc_emb_name = None
+        tim_emb_name = None
+        uid_emb_name = None
         bsl_model_name = 'baseline_mlp2.m'
         prt_model_name = 'baseline_mlp2.m'
     if dataset == 'WIFI':
@@ -58,9 +58,9 @@ class Parameter:
     if dataset == 'F':
         loc_size = 500
         uid_size = 532
-        loc_emb_name = 'F_08-01_loc'
-        tim_emb_name = 'F_08-01_tim'
-        uid_emb_name = 'F_08-01_uid'
+        loc_emb_name = None
+        tim_emb_name = None
+        uid_emb_name = None
         bsl_model_name = 'baseline_mlp2.m'
         prt_model_name = 'baseline_mlp2.m'
 
